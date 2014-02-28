@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Media.h"
 
 @interface ImageGridViewController : UICollectionViewController
+
+
 
 @end

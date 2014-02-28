@@ -26,6 +26,9 @@
 		9410DAFF18BFF5AF00B912B5 /* Instagram.m in Sources */ = {isa = PBXBuildFile; fileRef = 9410DAFD18BFF5AF00B912B5 /* Instagram.m */; };
 		9499D82E18C012A60003E1BC /* InstagramManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9499D82D18C012A60003E1BC /* InstagramManager.m */; };
 		9499D83418C042040003E1BC /* ImageGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9499D83318C042040003E1BC /* ImageGridViewController.m */; };
+		9499D83718C0453B0003E1BC /* Media.m in Sources */ = {isa = PBXBuildFile; fileRef = 9499D83618C0453B0003E1BC /* Media.m */; };
+		9499D83918C047100003E1BC /* placeHolder.png in Resources */ = {isa = PBXBuildFile; fileRef = 9499D83818C047100003E1BC /* placeHolder.png */; };
+		9499D83C18C0472F0003E1BC /* MediaController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9499D83B18C0472F0003E1BC /* MediaController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +71,11 @@
 		9499D82D18C012A60003E1BC /* InstagramManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InstagramManager.m; sourceTree = "<group>"; };
 		9499D83218C042040003E1BC /* ImageGridViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageGridViewController.h; sourceTree = "<group>"; };
 		9499D83318C042040003E1BC /* ImageGridViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageGridViewController.m; sourceTree = "<group>"; };
+		9499D83518C0453B0003E1BC /* Media.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Media.h; sourceTree = "<group>"; };
+		9499D83618C0453B0003E1BC /* Media.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Media.m; sourceTree = "<group>"; };
+		9499D83818C047100003E1BC /* placeHolder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeHolder.png; sourceTree = "<group>"; };
+		9499D83A18C0472F0003E1BC /* MediaController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaController.h; sourceTree = "<group>"; };
+		9499D83B18C0472F0003E1BC /* MediaController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,8 +144,13 @@
 				9410DAD718BFF37500B912B5 /* ViewController.m */,
 				9499D83218C042040003E1BC /* ImageGridViewController.h */,
 				9499D83318C042040003E1BC /* ImageGridViewController.m */,
+				9499D83518C0453B0003E1BC /* Media.h */,
+				9499D83618C0453B0003E1BC /* Media.m */,
+				9499D83A18C0472F0003E1BC /* MediaController.h */,
+				9499D83B18C0472F0003E1BC /* MediaController.m */,
 				9410DAF818BFF59D00B912B5 /* lib */,
 				9410DAD918BFF37500B912B5 /* Images.xcassets */,
+				9499D83818C047100003E1BC /* placeHolder.png */,
 				9410DAC818BFF37500B912B5 /* Supporting Files */,
 				9410DAF618BFF4AE00B912B5 /* Readme.rtf */,
 			);
@@ -262,6 +275,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9410DADA18BFF37500B912B5 /* Images.xcassets in Resources */,
+				9499D83918C047100003E1BC /* placeHolder.png in Resources */,
 				9410DACC18BFF37500B912B5 /* InfoPlist.strings in Resources */,
 				9410DAF718BFF4AE00B912B5 /* Readme.rtf in Resources */,
 				9410DAD518BFF37500B912B5 /* Main.storyboard in Resources */,
@@ -283,8 +297,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9499D83C18C0472F0003E1BC /* MediaController.m in Sources */,
 				9499D83418C042040003E1BC /* ImageGridViewController.m in Sources */,
 				9410DAFF18BFF5AF00B912B5 /* Instagram.m in Sources */,
+				9499D83718C0453B0003E1BC /* Media.m in Sources */,
 				9410DAD818BFF37500B912B5 /* ViewController.m in Sources */,
 				9499D82E18C012A60003E1BC /* InstagramManager.m in Sources */,
 				9410DAD218BFF37500B912B5 /* AppDelegate.m in Sources */,
