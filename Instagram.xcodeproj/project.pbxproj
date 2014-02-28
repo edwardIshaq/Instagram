@@ -138,16 +138,8 @@
 				9410DAD018BFF37500B912B5 /* AppDelegate.h */,
 				9410DAD118BFF37500B912B5 /* AppDelegate.m */,
 				9410DAD318BFF37500B912B5 /* Main.storyboard */,
-				9499D82C18C012A60003E1BC /* InstagramManager.h */,
-				9499D82D18C012A60003E1BC /* InstagramManager.m */,
-				9410DAD618BFF37500B912B5 /* ViewController.h */,
-				9410DAD718BFF37500B912B5 /* ViewController.m */,
-				9499D83218C042040003E1BC /* ImageGridViewController.h */,
-				9499D83318C042040003E1BC /* ImageGridViewController.m */,
-				9499D83518C0453B0003E1BC /* Media.h */,
-				9499D83618C0453B0003E1BC /* Media.m */,
-				9499D83A18C0472F0003E1BC /* MediaController.h */,
-				9499D83B18C0472F0003E1BC /* MediaController.m */,
+				9427122B18C0586700872FBE /* ViewControllers */,
+				9427122C18C0587700872FBE /* Controllers */,
 				9410DAF818BFF59D00B912B5 /* lib */,
 				9410DAD918BFF37500B912B5 /* Images.xcassets */,
 				9499D83818C047100003E1BC /* placeHolder.png */,
@@ -196,6 +188,30 @@
 				9410DAFD18BFF5AF00B912B5 /* Instagram.m */,
 			);
 			name = lib;
+			sourceTree = "<group>";
+		};
+		9427122B18C0586700872FBE /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				9410DAD618BFF37500B912B5 /* ViewController.h */,
+				9410DAD718BFF37500B912B5 /* ViewController.m */,
+				9499D83218C042040003E1BC /* ImageGridViewController.h */,
+				9499D83318C042040003E1BC /* ImageGridViewController.m */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		9427122C18C0587700872FBE /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				9499D83518C0453B0003E1BC /* Media.h */,
+				9499D83618C0453B0003E1BC /* Media.m */,
+				9499D83A18C0472F0003E1BC /* MediaController.h */,
+				9499D83B18C0472F0003E1BC /* MediaController.m */,
+				9499D82C18C012A60003E1BC /* InstagramManager.h */,
+				9499D82D18C012A60003E1BC /* InstagramManager.m */,
+			);
+			name = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

@@ -8,6 +8,7 @@
 
 #import "ImageGridViewController.h"
 #import "MediaController.h"
+#import "Media.h"
 
 @interface ImageGridViewController ()
 @property MediaController* mediaController;
@@ -67,8 +68,15 @@
 // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"imageCell" forIndexPath:indexPath];
-//    UIImageView *imageView = (UIImageView *)[cell.contentView viewWithTag:0];
-//    imageView.image = [UIImage imageNamed:@"placeHolder"];
+    
+    Media *media = [self.mediaController.allMedia objectAtIndex:indexPath.row];
+    if (media.thumbnail) {
+        UIImageView *imageView = (UIImageView *)[cell.contentView viewWithTag:1];
+        imageView.image = media.thumbnail;
+    }
+
+    UILabel *label = (UILabel*)[cell.contentView viewWithTag:2];
+    label.text = media.title;
     
     return cell;
 }

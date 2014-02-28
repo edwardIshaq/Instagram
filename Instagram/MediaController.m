@@ -22,6 +22,7 @@
     self.mediaStore = [NSMutableArray new];
     self.mediaThumbs = [NSMutableDictionary new];
     self.thumbDispatch = dispatch_queue_create("com.objectiv-coder.thumbDownload", DISPATCH_QUEUE_CONCURRENT);
+//    dispatch_set_target_queue(self.thumbDispatch, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0));
     
     return self;
 }
@@ -35,11 +36,26 @@
         [self willChangeValueForKey:@"allMedia"];
         for (id dicEntry in mediaArray) {
             Media *_media = [[Media alloc] initWithDictionary:dicEntry];
-            
             [self.mediaStore addObject:_media];
+            
+            [self downloadImageForMedia:_media];
         }
         [self didChangeValueForKey:@"allMedia"];
     }
+}
+
+- (void)downloadImageForMedia:(Media*)media {
+    dispatch_async(self.thumbDispatch, ^{
+        NSData * data = [NSData dataWithContentsOfURL:media.thumbnailURL];
+        UIImage *result = [UIImage imageWithData:data];
+        media.thumbnail = result;
+        if (media.mediaDelegate && [media.mediaDelegate conformsToProtocol:@protocol(MediaDelegate)]) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [media.mediaDelegate media:media downloadedImage:media.thumbnail];
+            });
+            
+        }
+    });
 }
 
 - (UIImage*)thumbForMedia:(Media*)media{
