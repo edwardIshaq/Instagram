@@ -10,6 +10,7 @@
 
 @interface Camera : NSObject
 
-@property (strong) UINavigationController* nav;
-- (void)showCamera;
+- (BOOL) startCameraControllerFromViewController: (UIViewController*) controller
+                                   usingDelegate: (id <UIImagePickerControllerDelegate, UINavigationControllerDelegate>) delegate;
+
 @end

@@ -66,11 +66,6 @@
     return self.mediaController.allMedia.count;
 }
 
-- (void)presentCamera {
-    Camera *cam = [Camera new];
-    cam.nav = self.navigationController;
-    [cam showCamera];
-}
 
 // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -103,4 +98,22 @@
     [cell setNeedsDisplay];
 
 }
+
+- (void)presentCamera {
+    Camera *cam = [Camera new];
+    [cam startCameraControllerFromViewController:self usingDelegate:self];
+}
+
+// For responding to the user tapping Cancel.
+- (void) imagePickerControllerDidCancel: (UIImagePickerController *) picker {
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
+
+// For responding to the user accepting a newly-captured picture or movie
+- (void) imagePickerController: (UIImagePickerController *) picker
+ didFinishPickingMediaWithInfo: (NSDictionary *) info {
+    NSLog(@"%@",info);
+}
+
+
 @end

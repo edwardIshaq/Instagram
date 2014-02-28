@@ -203,6 +203,8 @@
 				9410DAD718BFF37500B912B5 /* ViewController.m */,
 				9499D83218C042040003E1BC /* ImageGridViewController.h */,
 				9499D83318C042040003E1BC /* ImageGridViewController.m */,
+				9427122F18C05F1600872FBE /* Camera.h */,
+				9427123018C05F1600872FBE /* Camera.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -216,8 +218,6 @@
 				9499D83B18C0472F0003E1BC /* MediaController.m */,
 				9499D82C18C012A60003E1BC /* InstagramManager.h */,
 				9499D82D18C012A60003E1BC /* InstagramManager.m */,
-				9427122F18C05F1600872FBE /* Camera.h */,
-				9427123018C05F1600872FBE /* Camera.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -463,7 +463,7 @@
 				GCC_PREFIX_HEADER = "Instagram/Instagram-Prefix.pch";
 				INFOPLIST_FILE = "Instagram/Instagram-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "F38C95B1-662A-4F29-974C-78B9F16F557F";
+				PROVISIONING_PROFILE = "67654DF3-17B2-42DD-9E8A-D2885EE97AFB";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -478,7 +478,7 @@
 				GCC_PREFIX_HEADER = "Instagram/Instagram-Prefix.pch";
 				INFOPLIST_FILE = "Instagram/Instagram-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "F38C95B1-662A-4F29-974C-78B9F16F557F";
+				PROVISIONING_PROFILE = "67654DF3-17B2-42DD-9E8A-D2885EE97AFB";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

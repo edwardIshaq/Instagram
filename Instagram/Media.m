@@ -22,7 +22,7 @@
         self.title = mediaDic[@"caption"][@"text"];    
     }
     else {
-        NSLog(@"%@",mediaDic);
+//        NSLog(@"%@",mediaDic);
     }
     
     self.standardImageURL = [NSURL URLWithString:mediaDic[@"images"][@"standard_resolution"][@"url"]];

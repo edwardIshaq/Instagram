@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "Media.h"
 
-@interface ImageGridViewController : UICollectionViewController <MediaDelegate>
+@interface ImageGridViewController : UICollectionViewController <MediaDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 @end

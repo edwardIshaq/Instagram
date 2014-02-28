@@ -8,29 +8,39 @@
 
 #import "Camera.h"
 
+@interface Camera ()
+@property (nonatomic) UIImagePickerController *imagePickerController;
+
+@end
 @implementation Camera
-- (void)showCamera {
-    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
-    {
-        UIImagePickerController *imagePicker = [[UIImagePickerController alloc]init];
-        imagePicker.delegate = self;
-        imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-        imagePicker.allowsEditing = YES;
-        
-        [self.nav presentViewController:imagePicker animated:YES completion:^{
-            NSLog(@"done");
-        }];
-    }
-    return;
-//    else
-//    {
-//        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Camera Unavailable"
-//                                                       message:@"Unable to find a camera on your device."
-//                                                      delegate:nil
-//                                             cancelButtonTitle:@"OK"
-//                                             otherButtonTitles:nil, nil];
-//        [alert show];
-//        alert = nil;
-//    }
+
+- (BOOL) startCameraControllerFromViewController: (UIViewController*) controller
+                                   usingDelegate: (id <UIImagePickerControllerDelegate, UINavigationControllerDelegate>) delegate {
+    
+    if (([UIImagePickerController isSourceTypeAvailable:
+          UIImagePickerControllerSourceTypeCamera] == NO)
+        || (delegate == nil)
+        || (controller == nil))
+        return NO;
+    
+    
+    UIImagePickerController *cameraUI = [[UIImagePickerController alloc] init];
+    cameraUI.sourceType = UIImagePickerControllerSourceTypeCamera;
+    
+    // Displays a control that allows the user to choose picture or
+    // movie capture, if both are available:
+    cameraUI.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypeCamera];
+    
+    // Hides the controls for moving & scaling pictures, or for
+    // trimming movies. To instead show the controls, use YES.
+    cameraUI.allowsEditing = NO;
+    
+    cameraUI.delegate = delegate;
+    
+    [controller presentViewController:cameraUI animated:YES completion:^{
+        NSLog(@"Done");
+    }];
+    return YES;
 }
+
 @end
