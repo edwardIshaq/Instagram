@@ -15,6 +15,7 @@
 @end
 
 
+
 @implementation MediaController
 
 - (id)init {
@@ -57,11 +58,13 @@
         }
     });
 }
+
 - (UIImage*)downloadStandardImageForMedia:(Media*)media {
     NSData * data = [NSData dataWithContentsOfURL:media.standardImageURL];
     media.standardImage = [UIImage imageWithData:data];
     return media.standardImage;
 }
+
 - (UIImage*)thumbForMedia:(Media*)media{
     return [self.mediaThumbs objectForKey:media];
 }

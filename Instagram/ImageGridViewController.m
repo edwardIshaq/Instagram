@@ -14,6 +14,7 @@
 
 @interface ImageGridViewController ()
 @property MediaController* mediaController;
+@property Media *selectedMedia;
 @end
 
 @implementation ImageGridViewController
@@ -34,26 +35,22 @@
     }
     return self;
 }
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         [self commonInit];
     }
     return self;
 }
-
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
-
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning{
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 - (NSArray *)datasource {
     return self.mediaController.allMedia;
 }
@@ -63,17 +60,12 @@
     }
 }
 
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return self.mediaController.allMedia.count;
 }
-
-
-// The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"imageCell" forIndexPath:indexPath];
-
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(presentCamera)];
-    [cell.contentView addGestureRecognizer:tap];
     
     Media *media = [self.datasource objectAtIndex:indexPath.row];
     
@@ -90,7 +82,12 @@
     
     return cell;
 }
-
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    Media *media = [self.datasource objectAtIndex:indexPath.row];
+    self.selectedMedia = media;
+    Camera *cam = [Camera new];
+    [cam startCameraControllerFromViewController:self usingDelegate:self];
+}
 - (void)media:(Media *)photo downloadedImage:(UIImage *)image {
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:[self.datasource indexOfObject:photo] inSection:0];
     UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
@@ -98,11 +95,6 @@
     imageView.image = image;
     [cell setNeedsDisplay];
 
-}
-
-- (void)presentCamera {
-    Camera *cam = [Camera new];
-    [cam startCameraControllerFromViewController:self usingDelegate:self];
 }
 
 // For responding to the user tapping Cancel.
@@ -113,22 +105,20 @@
 // For responding to the user accepting a newly-captured picture or movie
 - (void) imagePickerController: (UIImagePickerController *) picker didFinishPickingMediaWithInfo: (NSDictionary *) info {
     NSString *mediaType = [info objectForKey: UIImagePickerControllerMediaType];
-    UIImage *originalImage;
+    
     
     // Handle a still image capture
-    if (CFStringCompare ((CFStringRef) mediaType, kUTTypeImage, 0) == kCFCompareEqualTo)
-    {
+    if (CFStringCompare ((CFStringRef) mediaType, kUTTypeImage, 0) == kCFCompareEqualTo) {
+        UIImage *originalImage = (UIImage *) [info objectForKey: UIImagePickerControllerOriginalImage];
+        Media *media = self.selectedMedia;
+        self.selectedMedia = nil;
         
-        originalImage = (UIImage *) [info objectForKey: UIImagePickerControllerOriginalImage];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [self.mediaController downloadStandardImageForMedia:media];
+            [self mergeFgImage:originalImage foregroundImage:media.standardImage];
+        });
     }
     [self dismissViewControllerAnimated:YES completion:NULL];
-
-    Media *media = [[self datasource] objectAtIndex:0];
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [self.mediaController downloadStandardImageForMedia:media];
-        [self mergeFgImage:originalImage foregroundImage:media.standardImage];
-    });
 }
 
 - (UIImage *)mergeFgImage:(UIImage *)bgImage foregroundImage:(UIImage *)fgImage  {
