@@ -21,7 +21,6 @@
 }
 - (id)commonInit {
     self.mediaController = [[AppDelegate sharedAppDelegate] mediaController];
-    NSLog(@"%@",self.mediaController.allMedia);
     [self.mediaController addObserver:self forKeyPath:@"allMedia" options:NSKeyValueObservingOptionNew context:NULL];
 
     return self;
@@ -53,10 +52,11 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+- (NSArray *)datasource {
+    return self.mediaController.allMedia;
+}
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if ([keyPath isEqualToString:@"allMedia"]) {
-        NSLog(@"%@",self.mediaController.allMedia);
         [self.collectionView reloadData];
     }
 }
@@ -65,14 +65,20 @@
     return self.mediaController.allMedia.count;
 }
 
+
+
 // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"imageCell" forIndexPath:indexPath];
     
-    Media *media = [self.mediaController.allMedia objectAtIndex:indexPath.row];
+    Media *media = [self.datasource objectAtIndex:indexPath.row];
+    
     if (media.thumbnail) {
         UIImageView *imageView = (UIImageView *)[cell.contentView viewWithTag:1];
         imageView.image = media.thumbnail;
+    }
+    else {
+        media.mediaDelegate = self;
     }
 
     UILabel *label = (UILabel*)[cell.contentView viewWithTag:2];
@@ -81,4 +87,12 @@
     return cell;
 }
 
+- (void)media:(Media *)photo downloadedImage:(UIImage *)image {
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:[self.datasource indexOfObject:photo] inSection:0];
+    UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
+    UIImageView *imageView = (UIImageView *)[cell.contentView viewWithTag:1];
+    imageView.image = image;
+    [cell setNeedsDisplay];
+
+}
 @end
