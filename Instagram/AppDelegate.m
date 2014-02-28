@@ -57,4 +57,5 @@
 -(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
   return [[InstagramManager sharedManager] handleOpenURL:url];
 }
+
 @end

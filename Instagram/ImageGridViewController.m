@@ -106,6 +106,8 @@
     NSString *mediaType = [info objectForKey: UIImagePickerControllerMediaType];
     
     if (CFStringCompare ((CFStringRef) mediaType, kUTTypeImage, 0) == kCFCompareEqualTo) {
+        [self presentNotification];
+        
         UIImage *originalImage = (UIImage *) [info objectForKey: UIImagePickerControllerOriginalImage];
         Media *media = self.selectedMedia;
         self.selectedMedia = nil;
@@ -113,6 +115,17 @@
         [self processAndEmailImage:originalImage withMedia:media];
     }
     [self dismissViewControllerAnimated:YES completion:NULL];
+}
+- (void)presentNotification {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Processing" message:@"Image is being proccessed..." delegate:nil cancelButtonTitle:nil otherButtonTitles:nil, nil];
+    alert.tag = 123;
+    [alert show];
+    
+    double delayInSeconds = 1.5;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [alert dismissWithClickedButtonIndex:0 animated:TRUE];
+    });
 }
 
 - (void)processAndEmailImage:(UIImage*)originalImage withMedia:(Media*)media {
