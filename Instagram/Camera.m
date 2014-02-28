@@ -37,6 +37,10 @@
     
     cameraUI.delegate = delegate;
     
+    UIImageView *overlay = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"overlay"]];
+    overlay.frame = cameraUI.view.bounds;
+//    [cameraUI.view addSubview:overlay];
+    cameraUI.cameraOverlayView = overlay;
     [controller presentViewController:cameraUI animated:YES completion:^{
         NSLog(@"Done");
     }];

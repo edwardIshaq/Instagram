@@ -31,6 +31,7 @@
 		9499D83718C0453B0003E1BC /* Media.m in Sources */ = {isa = PBXBuildFile; fileRef = 9499D83618C0453B0003E1BC /* Media.m */; };
 		9499D83918C047100003E1BC /* placeHolder.png in Resources */ = {isa = PBXBuildFile; fileRef = 9499D83818C047100003E1BC /* placeHolder.png */; };
 		9499D83C18C0472F0003E1BC /* MediaController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9499D83B18C0472F0003E1BC /* MediaController.m */; };
+		94F26ED418C10CDB00B4CBC5 /* overlay.png in Resources */ = {isa = PBXBuildFile; fileRef = 94F26ED318C10CDB00B4CBC5 /* overlay.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +82,7 @@
 		9499D83818C047100003E1BC /* placeHolder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeHolder.png; sourceTree = "<group>"; };
 		9499D83A18C0472F0003E1BC /* MediaController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaController.h; sourceTree = "<group>"; };
 		9499D83B18C0472F0003E1BC /* MediaController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaController.m; sourceTree = "<group>"; };
+		94F26ED318C10CDB00B4CBC5 /* overlay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = overlay.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,9 +150,10 @@
 				9410DAF818BFF59D00B912B5 /* lib */,
 				9410DAD918BFF37500B912B5 /* Images.xcassets */,
 				9499D83818C047100003E1BC /* placeHolder.png */,
+				94F26ED318C10CDB00B4CBC5 /* overlay.png */,
+				9427122D18C05E8500872FBE /* challenge.png */,
 				9410DAC818BFF37500B912B5 /* Supporting Files */,
 				9410DAF618BFF4AE00B912B5 /* Readme.rtf */,
-				9427122D18C05E8500872FBE /* challenge.png */,
 			);
 			path = Instagram;
 			sourceTree = "<group>";
@@ -303,6 +306,7 @@
 				9410DACC18BFF37500B912B5 /* InfoPlist.strings in Resources */,
 				9427122E18C05E8500872FBE /* challenge.png in Resources */,
 				9410DAF718BFF4AE00B912B5 /* Readme.rtf in Resources */,
+				94F26ED418C10CDB00B4CBC5 /* overlay.png in Resources */,
 				9410DAD518BFF37500B912B5 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
