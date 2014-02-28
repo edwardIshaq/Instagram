@@ -39,12 +39,29 @@
     
     UIImageView *overlay = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"overlay"]];
     overlay.frame = cameraUI.view.bounds;
-//    [cameraUI.view addSubview:overlay];
     cameraUI.cameraOverlayView = overlay;
-    [controller presentViewController:cameraUI animated:YES completion:^{
-        NSLog(@"Done");
-    }];
+    [controller presentViewController:cameraUI animated:YES completion:NULL];
     return YES;
 }
 
+- (UIImage *)mergeFgImage:(UIImage *)bgImage withBGImage:(UIImage *)fgImage  {
+    
+    CGSize newSize = CGSizeMake(bgImage.size.width, bgImage.size.height);
+    UIGraphicsBeginImageContext( newSize );
+    
+    // Use existing opacity as is
+    [bgImage drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
+    
+    // Apply supplied opacity if applicable
+    // Change xPos, yPos if applicable
+    CGFloat xOffset = (bgImage.size.width-fgImage.size.width)/2.0;
+    CGFloat yOffset = (bgImage.size.height-fgImage.size.height)/2.0;
+    [fgImage drawInRect:CGRectMake(xOffset, yOffset ,fgImage.size.width,fgImage.size.height) blendMode:kCGBlendModeNormal alpha:1.0];
+    
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    
+    return newImage;
+}
 @end

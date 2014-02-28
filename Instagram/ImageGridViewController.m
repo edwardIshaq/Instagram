@@ -15,6 +15,7 @@
 @interface ImageGridViewController ()
 @property MediaController* mediaController;
 @property Media *selectedMedia;
+@property Camera *camera;
 @end
 
 @implementation ImageGridViewController
@@ -25,7 +26,7 @@
 - (id)commonInit {
     self.mediaController = [[AppDelegate sharedAppDelegate] mediaController];
     [self.mediaController addObserver:self forKeyPath:@"allMedia" options:NSKeyValueObservingOptionNew context:NULL];
-
+    self.camera = [Camera new];
     return self;
 }
 - (id)initWithCoder:(NSCoder *)aDecoder {
@@ -41,14 +42,6 @@
         [self commonInit];
     }
     return self;
-}
-- (void)viewDidLoad {
-    [super viewDidLoad];
-	// Do any additional setup after loading the view.
-}
-- (void)didReceiveMemoryWarning{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - datasource
@@ -86,8 +79,7 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     Media *media = [self.datasource objectAtIndex:indexPath.row];
     self.selectedMedia = media;
-    Camera *cam = [Camera new];
-    [cam startCameraControllerFromViewController:self usingDelegate:self];
+    [self.camera startCameraControllerFromViewController:self usingDelegate:self];
 }
 - (void)media:(Media *)photo downloadedImage:(UIImage *)image {
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:[self.datasource indexOfObject:photo] inSection:0];
@@ -95,14 +87,13 @@
     UIImageView *imageView = (UIImageView *)[cell.contentView viewWithTag:1];
     imageView.image = image;
     [cell setNeedsDisplay];
-
 }
 
 #pragma mark - imagePicker Delegate
-- (void) imagePickerControllerDidCancel: (UIImagePickerController *) picker {
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *) picker {
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
-- (void) imagePickerController: (UIImagePickerController *) picker didFinishPickingMediaWithInfo: (NSDictionary *) info {
+- (void)imagePickerController: (UIImagePickerController *) picker didFinishPickingMediaWithInfo: (NSDictionary *) info {
     NSString *mediaType = [info objectForKey: UIImagePickerControllerMediaType];
     
     if (CFStringCompare ((CFStringRef) mediaType, kUTTypeImage, 0) == kCFCompareEqualTo) {
@@ -131,7 +122,7 @@
 - (void)processAndEmailImage:(UIImage*)originalImage withMedia:(Media*)media {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [self.mediaController downloadStandardImageForMedia:media];
-        UIImage *mergedImage = [self mergeFgImage:originalImage foregroundImage:media.standardImage];
+        UIImage *mergedImage = [self.camera mergeFgImage:originalImage withBGImage:media.standardImage];
         
         if (![MFMailComposeViewController canSendMail]) return;
         
@@ -171,25 +162,6 @@
     }
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
-- (UIImage *)mergeFgImage:(UIImage *)bgImage foregroundImage:(UIImage *)fgImage  {
 
-    CGSize newSize = CGSizeMake(bgImage.size.width, bgImage.size.height);
-    UIGraphicsBeginImageContext( newSize );
-    
-    // Use existing opacity as is
-    [bgImage drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
-    
-    // Apply supplied opacity if applicable
-    // Change xPos, yPos if applicable
-    CGFloat xOffset = (bgImage.size.width-fgImage.size.width)/2.0;
-    CGFloat yOffset = (bgImage.size.height-fgImage.size.height)/2.0;
-    [fgImage drawInRect:CGRectMake(xOffset, yOffset ,fgImage.size.width,fgImage.size.height) blendMode:kCGBlendModeNormal alpha:1.0];
-    
-    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    
-    return newImage;
-}
 
 @end

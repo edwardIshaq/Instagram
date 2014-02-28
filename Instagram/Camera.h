@@ -13,4 +13,5 @@
 - (BOOL) startCameraControllerFromViewController: (UIViewController*) controller
                                    usingDelegate: (id <UIImagePickerControllerDelegate, UINavigationControllerDelegate>) delegate;
 
+- (UIImage *)mergeFgImage:(UIImage *)bgImage withBGImage:(UIImage *)fgImage;
 @end
