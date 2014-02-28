@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MessageUI/MessageUI.h>
 #import "Media.h"
 
-@interface ImageGridViewController : UICollectionViewController <MediaDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+@interface ImageGridViewController : UICollectionViewController <MediaDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, MFMailComposeViewControllerDelegate>
 
 @end

@@ -51,6 +51,7 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - datasource
 - (NSArray *)datasource {
     return self.mediaController.allMedia;
 }
@@ -60,7 +61,7 @@
     }
 }
 
-
+#pragma mark - CollectionView
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return self.mediaController.allMedia.count;
 }
@@ -97,30 +98,66 @@
 
 }
 
-// For responding to the user tapping Cancel.
+#pragma mark - imagePicker Delegate
 - (void) imagePickerControllerDidCancel: (UIImagePickerController *) picker {
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
-
-// For responding to the user accepting a newly-captured picture or movie
 - (void) imagePickerController: (UIImagePickerController *) picker didFinishPickingMediaWithInfo: (NSDictionary *) info {
     NSString *mediaType = [info objectForKey: UIImagePickerControllerMediaType];
     
-    
-    // Handle a still image capture
     if (CFStringCompare ((CFStringRef) mediaType, kUTTypeImage, 0) == kCFCompareEqualTo) {
         UIImage *originalImage = (UIImage *) [info objectForKey: UIImagePickerControllerOriginalImage];
         Media *media = self.selectedMedia;
         self.selectedMedia = nil;
         
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            [self.mediaController downloadStandardImageForMedia:media];
-            [self mergeFgImage:originalImage foregroundImage:media.standardImage];
-        });
+        [self processAndEmailImage:originalImage withMedia:media];
     }
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
+- (void)processAndEmailImage:(UIImage*)originalImage withMedia:(Media*)media {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self.mediaController downloadStandardImageForMedia:media];
+        UIImage *mergedImage = [self mergeFgImage:originalImage foregroundImage:media.standardImage];
+        
+        if (![MFMailComposeViewController canSendMail]) return;
+        
+        MFMailComposeViewController *mailer = [[MFMailComposeViewController alloc] init];
+        
+        NSData *imageData = UIImagePNGRepresentation(mergedImage);
+        [mailer addAttachmentData:imageData mimeType:@"image/png" fileName:@"mobiletutsImage"];
+
+        dispatch_async(dispatch_get_main_queue(), ^{
+            mailer.mailComposeDelegate = self;
+            [self presentViewController:mailer animated:YES completion:NULL];
+        });
+
+    });
+}
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
+    switch (result)
+    {
+        case MFMailComposeResultCancelled:
+            //NSLog(@"Result: canceled");
+            break;
+        case MFMailComposeResultSaved:
+            //NSLog(@"Result: saved");
+            break;
+        case MFMailComposeResultSent:
+        {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Result" message:@"Mail Sent Successfully" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alert show];
+        }
+            break;
+        case MFMailComposeResultFailed:
+            //NSLog(@"Result: failed");
+            break;
+        default:
+            //NSLog(@"Result: not sent");
+            break;
+    }
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
 - (UIImage *)mergeFgImage:(UIImage *)bgImage foregroundImage:(UIImage *)fgImage  {
 
     CGSize newSize = CGSizeMake(bgImage.size.width, bgImage.size.height);
@@ -138,12 +175,6 @@
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        UIImageView *test = [[UIImageView alloc] initWithImage:newImage];
-        test.frame = self.view.bounds;
-        test.contentMode = UIViewContentModeScaleToFill;
-        [self.view addSubview:test];
-    });
     
     return newImage;
 }
