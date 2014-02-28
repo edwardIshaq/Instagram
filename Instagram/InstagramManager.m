@@ -62,7 +62,7 @@ static InstagramManager *_sharedManager = nil;
 }
 
 - (void)request:(IGRequest *)request didLoad:(id)result {
-    NSLog(@"Instagram did load: %@", result);
+//    NSLog(@"Instagram did load: %@", result);
     NSArray *mediaArray = (NSArray*)[result objectForKey:@"data"];
     [[[AppDelegate sharedAppDelegate] mediaController] processDownloadedMedia:mediaArray];
 }

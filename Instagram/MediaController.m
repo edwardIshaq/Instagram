@@ -11,6 +11,7 @@
 @interface MediaController ()
 @property NSMutableArray *mediaStore;
 @property NSMutableDictionary *mediaThumbs;
+@property (strong) dispatch_queue_t thumbDispatch;
 @end
 
 
@@ -20,20 +21,29 @@
     self = [super init];
     self.mediaStore = [NSMutableArray new];
     self.mediaThumbs = [NSMutableDictionary new];
+    self.thumbDispatch = dispatch_queue_create("com.objectiv-coder.thumbDownload", DISPATCH_QUEUE_CONCURRENT);
+    
     return self;
+}
+
+- (NSArray*)allMedia {
+    return [NSArray arrayWithArray:self.mediaStore];
 }
 
 - (void)processDownloadedMedia:(NSArray*)mediaArray{
     @autoreleasepool {
+        [self willChangeValueForKey:@"allMedia"];
         for (id dicEntry in mediaArray) {
             Media *_media = [[Media alloc] initWithDictionary:dicEntry];
+            
             [self.mediaStore addObject:_media];
         }
+        [self didChangeValueForKey:@"allMedia"];
     }
 }
 
 - (UIImage*)thumbForMedia:(Media*)media{
-    return nil;
+    return [self.mediaThumbs objectForKey:media];
 }
 
 

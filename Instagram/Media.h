@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 
 @interface Media : NSObject
+
+@property NSString *title;
 @property NSURL *lowResImageURL;
 @property NSURL *standardImageURL;
 @property NSURL *thumbnailURL;

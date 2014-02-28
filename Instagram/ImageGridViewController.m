@@ -7,18 +7,36 @@
 //
 
 #import "ImageGridViewController.h"
+#import "MediaController.h"
 
 @interface ImageGridViewController ()
-
+@property MediaController* mediaController;
 @end
 
 @implementation ImageGridViewController
 
+- (void)dealloc {
+    [self.mediaController removeObserver:self forKeyPath:@"allMedia"];
+}
+- (id)commonInit {
+    self.mediaController = [[AppDelegate sharedAppDelegate] mediaController];
+    NSLog(@"%@",self.mediaController.allMedia);
+    [self.mediaController addObserver:self forKeyPath:@"allMedia" options:NSKeyValueObservingOptionNew context:NULL];
+
+    return self;
+}
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        [self commonInit];
+    }
+    return self;
+}
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        [self commonInit];
     }
     return self;
 }
@@ -33,6 +51,26 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if ([keyPath isEqualToString:@"allMedia"]) {
+        NSLog(@"%@",self.mediaController.allMedia);
+        [self.collectionView reloadData];
+    }
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return self.mediaController.allMedia.count;
+}
+
+// The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"imageCell" forIndexPath:indexPath];
+//    UIImageView *imageView = (UIImageView *)[cell.contentView viewWithTag:0];
+//    imageView.image = [UIImage imageNamed:@"placeHolder"];
+    
+    return cell;
 }
 
 @end

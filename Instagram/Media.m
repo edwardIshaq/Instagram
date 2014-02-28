@@ -12,8 +12,17 @@
 
 - (id)initWithDictionary:(NSDictionary*)mediaDic {
     self = [super init];
-    if ( ! [mediaDic[@"type"] isEqualToString:@"image"] ) {
+
+    if ( !mediaDic || ! [mediaDic[@"type"] isEqualToString:@"image"]) {
         return self;
+    }
+    
+    id _caption = [mediaDic objectForKey:@"caption"];
+    if (_caption && ![[NSNull null] isEqual:_caption]) {
+        self.title = mediaDic[@"caption"][@"text"];    
+    }
+    else {
+        NSLog(@"%@",mediaDic);
     }
     
     self.standardImageURL = [NSURL URLWithString:mediaDic[@"images"][@"standard_resolution"][@"url"]];
@@ -24,6 +33,6 @@
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"< %@ | %@ >", [super description], self.thumbnailURL];
+    return [NSString stringWithFormat:@"< %@ | %@,  %@ >", [super description], self.title, self.thumbnailURL];
 }
 @end

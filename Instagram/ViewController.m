@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 #import "ImageGridViewController.h"
-
+#import "InstagramManager.h"
 
 @interface ViewController ()
 
@@ -27,7 +27,11 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userLoggedIn) name:@"InstagramManager_Authenticated" object:nil];
     
 }
-
+//- (void)viewWillAppear:(BOOL)animated {
+//    if ([[[InstagramManager sharedManager] instagram] isSessionValid]) {
+//        [self userLoggedIn];
+//    }
+//}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -38,7 +42,6 @@
     [[InstagramManager sharedManager] login];
 }
 - (void)userLoggedIn {
-    NSLog(@"User logged in push");
     UIStoryboard *mainStory = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     ImageGridViewController *vc = [mainStory instantiateViewControllerWithIdentifier:@"ImageGridViewControllerID"];
     [self.navigationController pushViewController:vc animated:YES];
