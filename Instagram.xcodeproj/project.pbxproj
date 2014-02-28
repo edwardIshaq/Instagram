@@ -24,6 +24,8 @@
 		9410DAF718BFF4AE00B912B5 /* Readme.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 9410DAF618BFF4AE00B912B5 /* Readme.rtf */; };
 		9410DAFE18BFF5AF00B912B5 /* IGRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 9410DAFB18BFF5AF00B912B5 /* IGRequest.m */; };
 		9410DAFF18BFF5AF00B912B5 /* Instagram.m in Sources */ = {isa = PBXBuildFile; fileRef = 9410DAFD18BFF5AF00B912B5 /* Instagram.m */; };
+		9427122E18C05E8500872FBE /* challenge.png in Resources */ = {isa = PBXBuildFile; fileRef = 9427122D18C05E8500872FBE /* challenge.png */; };
+		9427123118C05F1600872FBE /* Camera.m in Sources */ = {isa = PBXBuildFile; fileRef = 9427123018C05F1600872FBE /* Camera.m */; };
 		9499D82E18C012A60003E1BC /* InstagramManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9499D82D18C012A60003E1BC /* InstagramManager.m */; };
 		9499D83418C042040003E1BC /* ImageGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9499D83318C042040003E1BC /* ImageGridViewController.m */; };
 		9499D83718C0453B0003E1BC /* Media.m in Sources */ = {isa = PBXBuildFile; fileRef = 9499D83618C0453B0003E1BC /* Media.m */; };
@@ -67,6 +69,9 @@
 		9410DAFB18BFF5AF00B912B5 /* IGRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGRequest.m; sourceTree = "<group>"; };
 		9410DAFC18BFF5AF00B912B5 /* Instagram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Instagram.h; sourceTree = "<group>"; };
 		9410DAFD18BFF5AF00B912B5 /* Instagram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Instagram.m; sourceTree = "<group>"; };
+		9427122D18C05E8500872FBE /* challenge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = challenge.png; sourceTree = "<group>"; };
+		9427122F18C05F1600872FBE /* Camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Camera.h; sourceTree = "<group>"; };
+		9427123018C05F1600872FBE /* Camera.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Camera.m; sourceTree = "<group>"; };
 		9499D82C18C012A60003E1BC /* InstagramManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InstagramManager.h; sourceTree = "<group>"; };
 		9499D82D18C012A60003E1BC /* InstagramManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InstagramManager.m; sourceTree = "<group>"; };
 		9499D83218C042040003E1BC /* ImageGridViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageGridViewController.h; sourceTree = "<group>"; };
@@ -145,6 +150,7 @@
 				9499D83818C047100003E1BC /* placeHolder.png */,
 				9410DAC818BFF37500B912B5 /* Supporting Files */,
 				9410DAF618BFF4AE00B912B5 /* Readme.rtf */,
+				9427122D18C05E8500872FBE /* challenge.png */,
 			);
 			path = Instagram;
 			sourceTree = "<group>";
@@ -210,6 +216,8 @@
 				9499D83B18C0472F0003E1BC /* MediaController.m */,
 				9499D82C18C012A60003E1BC /* InstagramManager.h */,
 				9499D82D18C012A60003E1BC /* InstagramManager.m */,
+				9427122F18C05F1600872FBE /* Camera.h */,
+				9427123018C05F1600872FBE /* Camera.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -293,6 +301,7 @@
 				9410DADA18BFF37500B912B5 /* Images.xcassets in Resources */,
 				9499D83918C047100003E1BC /* placeHolder.png in Resources */,
 				9410DACC18BFF37500B912B5 /* InfoPlist.strings in Resources */,
+				9427122E18C05E8500872FBE /* challenge.png in Resources */,
 				9410DAF718BFF4AE00B912B5 /* Readme.rtf in Resources */,
 				9410DAD518BFF37500B912B5 /* Main.storyboard in Resources */,
 			);
@@ -319,6 +328,7 @@
 				9499D83718C0453B0003E1BC /* Media.m in Sources */,
 				9410DAD818BFF37500B912B5 /* ViewController.m in Sources */,
 				9499D82E18C012A60003E1BC /* InstagramManager.m in Sources */,
+				9427123118C05F1600872FBE /* Camera.m in Sources */,
 				9410DAD218BFF37500B912B5 /* AppDelegate.m in Sources */,
 				9410DACE18BFF37500B912B5 /* main.m in Sources */,
 				9410DAFE18BFF5AF00B912B5 /* IGRequest.m in Sources */,
@@ -448,10 +458,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Instagram/Instagram-Prefix.pch";
 				INFOPLIST_FILE = "Instagram/Instagram-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "F38C95B1-662A-4F29-974C-78B9F16F557F";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -461,10 +473,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Instagram/Instagram-Prefix.pch";
 				INFOPLIST_FILE = "Instagram/Instagram-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "F38C95B1-662A-4F29-974C-78B9F16F557F";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

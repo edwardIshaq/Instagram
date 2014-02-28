@@ -28,23 +28,62 @@ static InstagramManager *_sharedManager = nil;
 - (id)init {
     self = [super init];
     self.instagram = [[Instagram alloc] initWithClientId:APP_ID delegate:nil];
-
+    self.instagram.accessToken = [[NSUserDefaults standardUserDefaults] objectForKey:@"accessToken"];
+    self.instagram.sessionDelegate = self;
+    if (self.instagram.isSessionValid) {
+        [self getMediaByTag:@""];
+    }
     return self;
 }
 
 - (BOOL)handleOpenURL:(NSURL*)url {
-    BOOL authenticated = [self.instagram handleOpenURL:url];
-    if (authenticated) {
-        [self getMediaByTag:@""];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"InstagramManager_Authenticated" object:self];
-    }
-    return authenticated;
+    return [self.instagram handleOpenURL:url];
 }
 
 - (void)login {
     [self.instagram authorize:[NSArray arrayWithObjects:@"comments", @"likes", nil]];
 
 }
+
+-(void)igDidLogin {
+    NSLog(@"Instagram did login");
+    // here i can store accessToken
+    [[NSUserDefaults standardUserDefaults] setObject:self.instagram.accessToken forKey:@"accessToken"];
+	[[NSUserDefaults standardUserDefaults] synchronize];
+
+    [self getMediaByTag:@""];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"InstagramManager_Authenticated" object:self];
+
+}
+
+-(void)igDidNotLogin:(BOOL)cancelled {
+    NSLog(@"Instagram did not login");
+    NSString* message = nil;
+    if (cancelled) {
+        message = @"Access cancelled!";
+    } else {
+        message = @"Access denied!";
+    }
+    UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                        message:message
+                                                       delegate:nil
+                                              cancelButtonTitle:@"Ok"
+                                              otherButtonTitles:nil];
+    [alertView show];
+}
+
+-(void)igDidLogout {
+    NSLog(@"Instagram did logout");
+    // remove the accessToken
+    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"accessToken"];
+	[[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+-(void)igSessionInvalidated {
+    NSLog(@"Instagram session was invalidated");
+}
+
+
 
 - (void)getMediaByTag:(NSString*)tag {
     NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"tags/NewYork/media/recent", @"method", nil];

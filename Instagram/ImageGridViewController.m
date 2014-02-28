@@ -9,6 +9,7 @@
 #import "ImageGridViewController.h"
 #import "MediaController.h"
 #import "Media.h"
+#import "Camera.h"
 
 @interface ImageGridViewController ()
 @property MediaController* mediaController;
@@ -65,11 +66,18 @@
     return self.mediaController.allMedia.count;
 }
 
-
+- (void)presentCamera {
+    Camera *cam = [Camera new];
+    cam.nav = self.navigationController;
+    [cam showCamera];
+}
 
 // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"imageCell" forIndexPath:indexPath];
+
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(presentCamera)];
+    [cell.contentView addGestureRecognizer:tap];
     
     Media *media = [self.datasource objectAtIndex:indexPath.row];
     

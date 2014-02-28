@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "Instagram.h"
 
-@interface InstagramManager : NSObject <IGRequestDelegate>
+@interface InstagramManager : NSObject <IGRequestDelegate, IGSessionDelegate>
 @property (strong) Instagram *instagram;
 
 + (InstagramManager*)sharedManager;
