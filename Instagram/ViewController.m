@@ -7,6 +7,8 @@
 //
 
 #import "ViewController.h"
+#import "ImageGridViewController.h"
+
 
 @interface ViewController ()
 
@@ -18,6 +20,12 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    
+    self.navigationItem.title = @"Login";
+    self.instagramManager = [InstagramManager sharedManager];
+    //@"InstagramManager_Authenticated"
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userLoggedIn) name:@"InstagramManager_Authenticated" object:nil];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -26,4 +34,13 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)login:(id)sender {
+    [[InstagramManager sharedManager] login];
+}
+- (void)userLoggedIn {
+    NSLog(@"User logged in push");
+    UIStoryboard *mainStory = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    ImageGridViewController *vc = [mainStory instantiateViewControllerWithIdentifier:@"ImageGridViewControllerID"];
+    [self.navigationController pushViewController:vc animated:YES];
+}
 @end

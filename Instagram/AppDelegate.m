@@ -7,12 +7,16 @@
 //
 
 #import "AppDelegate.h"
+#import "InstagramManager.h"
+
+#define APP_ID @"fd725621c5e44198a5b8ad3f7a0ffa09"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    
     return YES;
 }
 							
@@ -43,4 +47,12 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+// YOU NEED TO CAPTURE igAPPID:// schema
+-(BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+    return [[InstagramManager sharedManager] handleOpenURL:url];
+}
+
+-(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+  return [[InstagramManager sharedManager] handleOpenURL:url];
+}
 @end

@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  ImageGridViewController.h
 //  Instagram
 //
 //  Created by Edward Ashak on 2/27/14.
@@ -7,9 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "InstagramManager.h"
 
-@interface ViewController : UIViewController
+@interface ImageGridViewController : UICollectionViewController
 
-@property (strong) InstagramManager *instagramManager;
 @end
