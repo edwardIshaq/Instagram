@@ -18,6 +18,7 @@
 @property NSURL *thumbnailURL;
 
 @property (strong) UIImage *thumbnail;
+@property (strong) UIImage *standardImage;
 
 @property (weak) id <MediaDelegate> mediaDelegate;
 

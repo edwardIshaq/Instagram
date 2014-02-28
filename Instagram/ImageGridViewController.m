@@ -10,6 +10,7 @@
 #import "MediaController.h"
 #import "Media.h"
 #import "Camera.h"
+#import <MobileCoreServices/UTCoreTypes.h>
 
 @interface ImageGridViewController ()
 @property MediaController* mediaController;
@@ -110,10 +111,51 @@
 }
 
 // For responding to the user accepting a newly-captured picture or movie
-- (void) imagePickerController: (UIImagePickerController *) picker
- didFinishPickingMediaWithInfo: (NSDictionary *) info {
-    NSLog(@"%@",info);
+- (void) imagePickerController: (UIImagePickerController *) picker didFinishPickingMediaWithInfo: (NSDictionary *) info {
+    NSString *mediaType = [info objectForKey: UIImagePickerControllerMediaType];
+    UIImage *originalImage;
+    
+    // Handle a still image capture
+    if (CFStringCompare ((CFStringRef) mediaType, kUTTypeImage, 0) == kCFCompareEqualTo)
+    {
+        
+        originalImage = (UIImage *) [info objectForKey: UIImagePickerControllerOriginalImage];
+    }
+    [self dismissViewControllerAnimated:YES completion:NULL];
+
+    Media *media = [[self datasource] objectAtIndex:0];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self.mediaController downloadStandardImageForMedia:media];
+        [self mergeFgImage:originalImage foregroundImage:media.standardImage];
+    });
 }
 
+- (UIImage *)mergeFgImage:(UIImage *)bgImage foregroundImage:(UIImage *)fgImage  {
+
+    CGSize newSize = CGSizeMake(bgImage.size.width, bgImage.size.height);
+    UIGraphicsBeginImageContext( newSize );
+    
+    // Use existing opacity as is
+    [bgImage drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
+    
+    // Apply supplied opacity if applicable
+    // Change xPos, yPos if applicable
+    CGFloat xOffset = (bgImage.size.width-fgImage.size.width)/2.0;
+    CGFloat yOffset = (bgImage.size.height-fgImage.size.height)/2.0;
+    [fgImage drawInRect:CGRectMake(xOffset, yOffset ,fgImage.size.width,fgImage.size.height) blendMode:kCGBlendModeNormal alpha:1.0];
+    
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UIImageView *test = [[UIImageView alloc] initWithImage:newImage];
+        test.frame = self.view.bounds;
+        test.contentMode = UIViewContentModeScaleToFill;
+        [self.view addSubview:test];
+    });
+    
+    return newImage;
+}
 
 @end

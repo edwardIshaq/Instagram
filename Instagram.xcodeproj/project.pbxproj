@@ -32,6 +32,7 @@
 		9499D83918C047100003E1BC /* placeHolder.png in Resources */ = {isa = PBXBuildFile; fileRef = 9499D83818C047100003E1BC /* placeHolder.png */; };
 		9499D83C18C0472F0003E1BC /* MediaController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9499D83B18C0472F0003E1BC /* MediaController.m */; };
 		94F26ED418C10CDB00B4CBC5 /* overlay.png in Resources */ = {isa = PBXBuildFile; fileRef = 94F26ED318C10CDB00B4CBC5 /* overlay.png */; };
+		94F26ED618C10E9700B4CBC5 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94F26ED518C10E9700B4CBC5 /* MobileCoreServices.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +84,7 @@
 		9499D83A18C0472F0003E1BC /* MediaController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaController.h; sourceTree = "<group>"; };
 		9499D83B18C0472F0003E1BC /* MediaController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaController.m; sourceTree = "<group>"; };
 		94F26ED318C10CDB00B4CBC5 /* overlay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = overlay.png; sourceTree = "<group>"; };
+		94F26ED518C10E9700B4CBC5 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +92,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				94F26ED618C10E9700B4CBC5 /* MobileCoreServices.framework in Frameworks */,
 				9410DAC418BFF37500B912B5 /* CoreGraphics.framework in Frameworks */,
 				9410DAC618BFF37500B912B5 /* UIKit.framework in Frameworks */,
 				9410DAC218BFF37500B912B5 /* Foundation.framework in Frameworks */,
@@ -131,6 +134,7 @@
 		9410DAC018BFF37500B912B5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				94F26ED518C10E9700B4CBC5 /* MobileCoreServices.framework */,
 				9410DAC118BFF37500B912B5 /* Foundation.framework */,
 				9410DAC318BFF37500B912B5 /* CoreGraphics.framework */,
 				9410DAC518BFF37500B912B5 /* UIKit.framework */,

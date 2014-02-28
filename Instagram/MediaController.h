@@ -15,5 +15,6 @@
 
 - (void)processDownloadedMedia:(NSArray*)mediaArray;
 - (UIImage*)thumbForMedia:(Media*)media;
+- (UIImage*)downloadStandardImageForMedia:(Media*)media;
 
 @end
